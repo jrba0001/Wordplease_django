@@ -1,0 +1,75 @@
+{% load static from staticfiles %}
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} WordPlease Pract. JRBA {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+</head>
+<body>
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+  <a class="navbar-brand" href="">WordPlease Pract. JRBA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+       {% if user.is_authenticated %}
+             <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Blogs
+            </a>
+             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'list_blog' %}">Listar Blogs</a>
+              <a class="dropdown-item" href="{% url 'nuevo' %}">Crear Blog</a>
+              <a class="dropdown-item" href="{% url 'new_post' %}">Crear Post</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'list_user' %}">Listar Usuarios</a>
+            </div>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/admin">Administrador</a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'list_blog' %}">Blog</a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+            </li>
+        {% endif %}
+
+
+    </ul>
+   {% if user.is_authenticated %}
+      <div >  Bienvenido {{user.username}}</div>
+   {% else %}
+        <div>No ha iniciado sesión</div>
+   {% endif %}
+  </div>
+</nav>
+     <hr>
+
+     {% block content %}{% endblock content %}
+     <script src="{% static 'js/popper.js' %}"></script>
+     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+</body>
+</html>

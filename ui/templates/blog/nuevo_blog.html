@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+
+{% block title %} Nuevo Blog {% endblock %}
+
+{% block content %}
+
+<div align="center">
+{% include 'includes/messages.html' %}
+</div>
+<form class = "form-horizontal" novalidate enctype="multipart/form-data" method="post">
+{% csrf_token %}
+<div class="container">
+  <div class="form-grop row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+        <div class="form-group">
+            <label for= " {{form.titulo.name}} " class="col-md-2">{{form.titulo.label}}</label>
+            <div class="col-md-7">
+            {{form.titulo}}
+            </div>
+        </div>
+        <div class="form-group">
+                <label for="{{form.descripcion.name}}" class="col-md-2">{{form.descripcion.label}}</label>
+            <div class="col-md-7">
+                {{form.descripcion}}
+            </div>
+        </div>
+        <div class="form-group">
+                <label for="{{form.imagen.name}}"class="col-md-2">{{form.imagen.label}}</label>
+            <div class="col-md-7">
+                {{form.imagen}}
+            </div>
+        </div>
+    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-sm " type="submit">Registrar </button>
+            <a href="javascript:window.history.back()" class = "btn btn-danger btn-sm" onclick=history.back>Cancelar</a>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+</form>
+</div>
+
+{% endblock %}

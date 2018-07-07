@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align="center">{{ title }}</h1>
+<p><h4 align="Center" style="color:red">{{ claim }}</h4> </p>
+
+{% include 'includes/messages.html' %}
+
+{% if object_list %}
+
+    <table class="table table-bordered table-hover table-condensed col-xs-12 col-sm-12 col-md-12 col-lg-12 small bgcolor=#a9a9a9">
+	<thead>
+		<tr>
+            <th style='vertical-align:middle' class='text-center'>Imagen Blog: </th>
+			<th style='vertical-align:middle' class='text-center'>Usuario: </th>
+			<th style='vertical-align:middle' class='text-center'>Titulo</th>
+			<th style='vertical-align:middle' class='text-center'>Descripcion</th>
+			<th style='vertical-align:middle' class='text-center'>Publish_on</th>
+			<th style='vertical-align:middle' class='text-center'>Activo</th>
+			<th style='vertical-align:middle' class='text-center'>Acciones</th>
+
+		</tr>
+
+	</thead>
+	<tbody>
+    {% for blog in object_list %}
+    <tr bgcolor="white">
+		  <td style='vertical-align:middle;font-weight: bold' class='text-center' nowrap>
+		{% if blog.imagen %}
+    		<img src="{{ blog.imagen.url }}" width="50" height="50">
+		{% endif %}
+		</td>
+        <td style='vertical-align:middle' class='text-center'>{{ blog.owner }} </td>
+        <td style='vertical-align:middle' class='text-center'>{{ blog.titulo }}</td>
+        <td style='vertical-align:middle' class='text-center'>{{ blog.descripcion }}</td>
+        <td style='vertical-align:middle;font-weight: bold' class='text-center'>{{ blog.publish_on }}</td>
+        <td style='vertical-align:middle;font-weight: bold' class='text-center'>{{ blog.activo }}</td>
+        <td style='vertical-align:middle' class='text-right' nowrap>
+			{% if user.is_authenticated %}
+				<a class="btn btn-primary btn-ld" href="blogs/{{blog.owner}}">Ver Posts</a>
+				<a class="btn btn-primary btn-xs" href="{% url 'new_post' %}">Añadir Post </a>
+				<a class="btn btn-danger btn-xs" href="#">Eliminar</a>
+			{% else %}
+				<a class="btn btn-primary btn-ld" href="blogs/{{blog.owner}}">Ver Posts </a>
+			{% endif %}
+
+        </td>
+	{% endfor %}
+{% else %}
+		<h4 align="center">No hay blogs  de usuarios</h4>
+{% endif %}
+	</tbody>
+</table>
+
+ <ul class="pagination justify-content-center">
+	<li>
+		{% if page_obj.has_previous %}
+       	 <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+		{% endif %}
+        </li>
+	<li>
+		{% if page_obj.has_next %}
+     	 <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    	{% endif %}
+    </li>
+</ul>
+
+
+{% endblock%}
